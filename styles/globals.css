@@ -119,6 +119,9 @@ form {
 	.home-container {
 		width: 95%;
 	}
+	.layout-container {
+		width: 100%;
+	}
 	select {
 		width: 90%;
 	}

@@ -57,7 +57,6 @@ const Home = ( { data, USDtoEURdata } ) =>
 
   const totalTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( total );
   const amountToCurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( amount );
-  const usdToEurTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( USDtoEURdata.result );
 
   return (
     <div className='home-container'>
