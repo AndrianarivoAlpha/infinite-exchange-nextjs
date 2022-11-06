@@ -9,13 +9,13 @@ const Footer = () => {
     <footer className='footer-container'>
       <h6>Contact developer</h6>
       <div className="social-media">
-        <a href="http://www.twiter.com" target="_blank" rel="noopener noreferrer">
+        <a href="http://www.twitter.com" target="_blank" rel="noopener noreferrer">
           <Image src={Twitter} alt="" height={40} width={40}/>
         </a>
-        <a href="http://www.twiter.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
           <Image src={Facebook} alt="" height={40} width={40}/>
         </a>
-        <a href="http://www.twiter.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://t.me/allpharv" target="_blank" rel="noopener noreferrer">
           <Image src={Telegram} alt="" height={40} width={40}/>
         </a>
       </div>

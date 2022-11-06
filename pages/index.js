@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { options, url } from '../lib/options'
-import { CiCoins1 } from 'react-icons/ci'
-import { CiCalculator2 } from 'react-icons/ci'
+import { options, url } from '../lib/options';
+import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai'
 
 const Home = ( { data, USDtoEURdata } ) =>
 {
@@ -12,9 +11,9 @@ const Home = ( { data, USDtoEURdata } ) =>
   const [ from, setFrom ] = useState( "USD" );
   const [ to, setTo ] = useState( "EUR" );
   const [ total, setTotal ] = useState( null );
-  const [date, setDate] = useState("")
+  const [ date, setDate ] = useState( "" )
 
-  const [isLoading, setIsLoading] =useState(false)
+  const [ isLoading, setIsLoading ] = useState( false )
 
   const timeConverter = ( UNIX_timestamp ) =>
   {
@@ -33,7 +32,7 @@ const Home = ( { data, USDtoEURdata } ) =>
   const getDevise = async () =>
   {
     setIsLoading( true )
-    
+
     if ( amount > 0 )
     {
       const res = await fetch( `${ url }/convert?from=${ from }&to=${ to }&amount=${ amount.toString() }`, options );
@@ -43,7 +42,7 @@ const Home = ( { data, USDtoEURdata } ) =>
       {
         setDate( data.info.timestamp )
         setTotal( data.result )
-        setIsLoading(false)
+        setIsLoading( false )
       }
     } else
     {
@@ -52,20 +51,24 @@ const Home = ( { data, USDtoEURdata } ) =>
 
   }
 
-  const totalTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 15 } ).format( total );
-  
-  const usdToEurTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 15 } ).format( USDtoEURdata.result );
+  useEffect( () =>
+  {
+    getDevise()
+  }, [ amount, from, to ] )
+
+  const totalTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( total );
+  const amountToCurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( amount );
+  const usdToEurTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( USDtoEURdata.result );
 
   return (
     <>
       <div className='home-container'>
         <div className="input-container from">
-          <CiCalculator2 style={ { fontSize: "1.5rem" } } />
+          <AiOutlineCalculator />
           <form
             onSubmit={ ( e ) =>
             {
               e.preventDefault();
-              getDevise();
             } }
           >
             <input
@@ -76,11 +79,14 @@ const Home = ( { data, USDtoEURdata } ) =>
               value={ amount }
               onChange={ ( e ) =>
               {
-                setAmount( e.target.value );
+                setAmount( e.target.value )
               }
               }
             />
           </form>
+        </div>
+        <div className="input-container from">
+          <AiOutlineDoubleRight />
           <select
             id=""
             name=""
@@ -101,18 +107,8 @@ const Home = ( { data, USDtoEURdata } ) =>
             }
           </select>
         </div>
-
-        <div className="input-container">
-          <CiCoins1 style={ { fontSize: "1.5rem" } } />
-          <div>
-            { isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <p className='total-p'>{ total ? totalTocurrency : usdToEurTocurrency }</p>
-            )
-            }
-          </div>
-
+        <div className="input-container to">
+          <AiOutlineSwap />
           <select
             id=""
             name=""
@@ -133,9 +129,7 @@ const Home = ( { data, USDtoEURdata } ) =>
             }
           </select>
         </div>
-        {
-          total && <p><small>Updated on : { timeConverter( date ) }</small></p>
-        }
+
         <button
           className='convert-btn'
           onClick={ () => getDevise() }
@@ -143,9 +137,34 @@ const Home = ( { data, USDtoEURdata } ) =>
           CONVERT
         </button>
 
+        <div className='result-container'>
+          { isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <div>
+              {
+                total && (
+                  <div>
+                    <p>{ amountToCurrency }.00 { from } =</p>
+                      <h1>{ totalTocurrency } { to }</h1>
+                      <br />
+                      <p>
+                        1 {from} = {total / amount} {to}
+                      </p>
+                      <p>
+                        1 { to } = { amount / total } { from }
+                      </p>
+                      <p style={ { fontSize: "8pt" } }>Updated on : { timeConverter( date ) }</p>
+                  </div>
+                )
+              }
+            </div>
+          )
+          }
+        </div>
       </div>
     </>
-    
+
   )
 }
 

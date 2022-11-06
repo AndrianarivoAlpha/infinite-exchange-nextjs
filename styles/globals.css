@@ -20,8 +20,6 @@ body {
 .home-container {
 	display: flex;
 	flex-direction: column;
-	align-content: center;
-	align-items: center;
 	margin: 50pt auto;
 }
 .convert-text {
@@ -43,6 +41,8 @@ body {
 }
 .convert-p {
 	font-weight: 100;
+	font-size: 6pt;
+	color: grey;
 }
 p,
 h1,
@@ -65,15 +65,13 @@ h6 {
 	background-color: white;
 	box-shadow: 5px 5px 10px rgb(211, 211, 211);
 }
-.from:hover {
+.input-container:hover {
 	border: 1px solid var(--blue--);
 }
 select {
-	width: 100pt;
 	height: 100%;
-	margin: 0;
+	width: 90%;
 	border: none;
-	border-left: 1px solid var(--black--) !important;
 	outline: none;
 	border: none;
 	background: none;
@@ -81,15 +79,12 @@ select {
 option {
 	background: none;
 }
-.total-p,
 input {
 	text-align: start;
 	margin: 0;
 	padding-left: 5px;
-	width: 100pt;
 	height: auto;
 	border: none;
-	border-left: 1px solid var(--black--) !important;
 	outline: none;
 }
 .devise-amount {
@@ -109,7 +104,7 @@ form {
 	border-radius: 5px;
 	border: none;
 	outline: none;
-	margin: 2px auto;
+	margin: 10px auto;
 	background-color: var(--blue--);
 	color: var(--light--);
 }
@@ -120,12 +115,11 @@ form {
 }
 
 @media screen and (max-width: 820px) {
-	.input-container,
-	.convert-btn {
+	.home-container {
 		width: 95%;
 	}
 	select {
-		width: 30%;
+		width: 90%;
 	}
 	.layout-container {
 		width: 100%;
