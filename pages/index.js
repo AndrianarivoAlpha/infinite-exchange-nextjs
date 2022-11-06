@@ -61,7 +61,7 @@ const Home = ( { data, USDtoEURdata } ) =>
   return (
     <div className='home-container'>
       <div className="input-container from">
-        <AiOutlineCalculator />
+        <AiOutlineCalculator style={{fontSize: "1.2rem"}} />
         <form
           onSubmit={ ( e ) =>
           {
