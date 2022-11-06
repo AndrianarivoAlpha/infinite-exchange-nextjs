@@ -4,7 +4,7 @@ import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-
 
 const Home = ( { data, USDtoEURdata } ) =>
 {
-  //console.log( USDtoEURdata );
+  console.log( USDtoEURdata );
   const { symbols } = data;
 
   const [ amount, setAmount ] = useState( 1 );
@@ -40,8 +40,10 @@ const Home = ( { data, USDtoEURdata } ) =>
 
       if ( data )
       {
-        setDate( data.info.timestamp )
-        setTotal( data.result )
+        console.log(data);
+
+        setDate( data?.info?.timestamp )
+        setTotal( data?.result )
         setIsLoading( false )
       }
     } else
@@ -61,109 +63,109 @@ const Home = ( { data, USDtoEURdata } ) =>
   const usdToEurTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( USDtoEURdata.result );
 
   return (
-    <>
-      <div className='home-container'>
-        <div className="input-container from">
-          <AiOutlineCalculator />
-          <form
-            onSubmit={ ( e ) =>
-            {
-              e.preventDefault();
-            } }
-          >
-            <input
-              autoFocus
-              type="text"
-              name="devise"
-              className="devise-amount"
-              value={ amount }
-              onChange={ ( e ) =>
-              {
-                setAmount( e.target.value )
-              }
-              }
-            />
-          </form>
-        </div>
-        <div className="input-container from">
-          <AiOutlineDoubleRight />
-          <select
-            id=""
-            name=""
-            value={ from }
-            onChange={ ( e ) =>
-            {
-              setFrom( e.target.value );
-            }
-            }
-          >
-            {
-              Object.keys( symbols ).map( ( key, index ) =>
-              {
-                return (
-                  <option key={ index } value={ key }>{ `${ key } - ${ symbols[ key ] }` }</option>
-                )
-              } )
-            }
-          </select>
-        </div>
-        <div className="input-container to">
-          <AiOutlineSwap />
-          <select
-            id=""
-            name=""
-            value={ to }
-            onChange={ ( e ) =>
-            {
-              setTo( e.target.value );
-            }
-            }
-          >
-            {
-              Object.keys( symbols ).map( ( key, index ) =>
-              {
-                return (
-                  <option key={ index } value={ key }>{ `${ key } - ${ symbols[ key ] }` }</option>
-                )
-              } )
-            }
-          </select>
-        </div>
-
-        <button
-          className='convert-btn'
-          onClick={ () => getDevise() }
+    <div className='home-container'>
+      <div className="input-container from">
+        <AiOutlineCalculator />
+        <form
+          onSubmit={ ( e ) =>
+          {
+            e.preventDefault();
+          } }
         >
-          CONVERT
-        </button>
-
-        <div className='result-container'>
-          { isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <div>
-              {
-                total && (
-                  <div>
-                    <p>{ amountToCurrency }.00 { from } =</p>
-                      <h1>{ totalTocurrency } { to }</h1>
-                      <br />
-                      <p>
-                        1 {from} = {total / amount} {to}
-                      </p>
-                      <p>
-                        1 { to } = { amount / total } { from }
-                      </p>
-                      <p style={ { fontSize: "8pt" } }>Updated on : { timeConverter( date ) }</p>
-                  </div>
-                )
-              }
-            </div>
-          )
-          }
-        </div>
+          <input
+            autoFocus
+            type="text"
+            name="devise"
+            className="devise-amount"
+            value={ amount }
+            onChange={ ( e ) =>
+            {
+              setAmount( e.target.value )
+            }
+            }
+          />
+        </form>
       </div>
-    </>
+      <div className="input-container from">
+        <AiOutlineDoubleRight />
+        <select
+          id=""
+          name=""
+          value={ from }
+          onChange={ ( e ) =>
+          {
+            setFrom( e.target.value );
+          }
+          }
+        >
+          {
+            symbols &&
+            Object.keys( symbols ).map( ( key, index ) =>
+            {
+              return (
+                <option key={ index } value={ key }>{ `${ key } - ${ symbols[ key ] }` }</option>
+              )
+            } )
+          }
+        </select>
+      </div>
+      <div className="input-container to">
+        <AiOutlineSwap />
+        <select
+          id=""
+          name=""
+          value={ to }
+          onChange={ ( e ) =>
+          {
+            setTo( e.target.value );
+          }
+          }
+        >
+          {
+            symbols &&
+            Object.keys( symbols ).map( ( key, index ) =>
+            {
+              return (
+                <option key={ index } value={ key }>{ `${ key } - ${ symbols[ key ] }` }</option>
+              )
+            } )
+          }
+        </select>
+      </div>
+
+      <button
+        className='convert-btn'
+        onClick={ () => getDevise() }
+      >
+        CONVERT
+      </button>
+
+      <div className='result-container'>
+        { isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {
+              total && (
+                <div>
+                  <p>{ amountToCurrency }.00 { from } =</p>
+                  <h1>{ totalTocurrency } { to }</h1>
+                  <br />
+                  <p>
+                    1 { from } = { total / amount } { to }
+                  </p>
+                  <p>
+                    1 { to } = { amount / total } { from }
+                  </p>
+                  <p style={ { fontSize: "8pt" } }>Updated on : { timeConverter( date ) }</p>
+                </div>
+              )
+            }
+          </div>
+        )
+        }
+      </div>
+    </div>
 
   )
 }
