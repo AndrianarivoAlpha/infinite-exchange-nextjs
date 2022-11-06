@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { options, url } from '../lib/options';
-import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai'
+import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai';
 
 const Home = ( { data, USDtoEURdata } ) =>
 {
-  console.log( USDtoEURdata );
   const { symbols } = data;
 
   const [ amount, setAmount ] = useState( 1 );
@@ -40,8 +39,6 @@ const Home = ( { data, USDtoEURdata } ) =>
 
       if ( data )
       {
-        console.log(data);
-
         setDate( data?.info?.timestamp )
         setTotal( data?.result )
         setIsLoading( false )
@@ -142,7 +139,10 @@ const Home = ( { data, USDtoEURdata } ) =>
 
       <div className='result-container'>
         { isLoading ? (
-          <p>Loading...</p>
+          <div>
+            <p>Loading...</p>
+          </div>
+        
         ) : (
           <div>
             {
