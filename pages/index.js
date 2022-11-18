@@ -3,7 +3,11 @@ import { options, url } from '../lib/options';
 import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai';
 import { timeConverter } from '../lib/utilsFunctions';
 
-const Home = ( { data, USDtoEURdata } ) =>
+const now = new Date();
+const endDate = `${ now.getFullYear() }-${ now.getMonth() }-${ now.getDate() }`;
+const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() }-${ now.getDate() }`;
+
+const Home = ( { data, timesSeriesData } ) =>
 {
   const { symbols } = data;
 
@@ -12,12 +16,6 @@ const Home = ( { data, USDtoEURdata } ) =>
   const [ to, setTo ] = useState( "EUR" );
   const [ total, setTotal ] = useState( null );
   const [ date, setDate ] = useState( "" );
-
-  const now = new Date();
-  const endDate = `${ now.getFullYear() }-${ now.getMonth() }-${ now.getDate() }`;
-  const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() }-${ now.getDate() }`;
-
-  const [timesSeriesData, setTimesSeriesData] = useState({})
 
   console.log( timesSeriesData );
 
@@ -32,14 +30,10 @@ const Home = ( { data, USDtoEURdata } ) =>
       const res = await fetch( `${ url }/convert?from=${ from }&to=${ to }&amount=${ amount.toString() }`, options );
       const data = await res.json();
 
-      const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=${ from }&to=${ to }`, options );
-      const timesSeriesData = await timesSeries.json();
-
-      if ( data && timesSeriesData )
+      if ( data )
       {
         setDate( data?.info?.timestamp )
         setTotal( data?.result )
-        setTimesSeriesData(timesSeriesData)
         setIsLoading( false )
       }
     } else
@@ -172,12 +166,13 @@ export default Home
 
 export const getServerSideProps = async () =>
 {
-  const resUSDtoEUR = await fetch( `${ url }/convert?from=USD&to=EUR&amount=1`, options );
-  const USDtoEURdata = await resUSDtoEUR.json();
-
   const res = await fetch( `${ url }/symbols`, options );
   const data = await res.json()
+
+  const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=EUR&to=USD`, options );
+  const timesSeriesData = await timesSeries.json();
+
   return {
-    props: { data, USDtoEURdata }
+    props: { data, timesSeriesData }
   }
 }
