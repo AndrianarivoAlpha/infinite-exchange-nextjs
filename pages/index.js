@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { options, url } from '../lib/options';
 import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai';
+import { timeConverter } from '../lib/utilsFunctions';
 
 const Home = ( { data, USDtoEURdata } ) =>
 {
@@ -10,23 +11,17 @@ const Home = ( { data, USDtoEURdata } ) =>
   const [ from, setFrom ] = useState( "USD" );
   const [ to, setTo ] = useState( "EUR" );
   const [ total, setTotal ] = useState( null );
-  const [ date, setDate ] = useState( "" )
+  const [ date, setDate ] = useState( "" );
+
+  const now = new Date();
+  const endDate = `${ now.getFullYear() }-${ now.getMonth() }-${ now.getDate() }`;
+  const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() }-${ now.getDate() }`;
+
+  const [timesSeriesData, setTimesSeriesData] = useState({})
+
+  console.log( timesSeriesData );
 
   const [ isLoading, setIsLoading ] = useState( false )
-
-  const timeConverter = ( UNIX_timestamp ) =>
-  {
-    var a = new Date( UNIX_timestamp * 1000 );
-    var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
-    var year = a.getFullYear();
-    var month = months[ a.getMonth() ];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-    return time;
-  }
 
   const getDevise = async () =>
   {
@@ -35,12 +30,16 @@ const Home = ( { data, USDtoEURdata } ) =>
     if ( amount > 0 )
     {
       const res = await fetch( `${ url }/convert?from=${ from }&to=${ to }&amount=${ amount.toString() }`, options );
-      const data = await res.json()
+      const data = await res.json();
 
-      if ( data )
+      const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=${ from }&to=${ to }`, options );
+      const timesSeriesData = await timesSeries.json();
+
+      if ( data && timesSeriesData )
       {
         setDate( data?.info?.timestamp )
         setTotal( data?.result )
+        setTimesSeriesData(timesSeriesData)
         setIsLoading( false )
       }
     } else
