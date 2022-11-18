@@ -61,7 +61,7 @@ const Home = ( { data } ) =>
           e.preventDefault();
         } }
       >
-        <div className="relative w-[360px]">
+        <div className="relative w-[340px]">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
           </div>
@@ -81,7 +81,7 @@ const Home = ( { data } ) =>
 
       <select
         id="countries"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[360px]"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[340px]"
         value={ from }
         onChange={ ( e ) =>
         {
@@ -103,7 +103,7 @@ const Home = ( { data } ) =>
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg>
       <select
         id="countries"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[360px]"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[340px]"
         value={ to }
         onChange={ ( e ) =>
         {
@@ -122,7 +122,7 @@ const Home = ( { data } ) =>
         }
       </select>
 
-      <div className='w-[360px]'>
+      <div className='w-[340px]'>
         <button
           type="button"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -144,7 +144,7 @@ const Home = ( { data } ) =>
           <div>
             {
               total && (
-                <div className='text-start mb-5 w-auto bg-gray-50 px-12 py-5 rounded'>
+                <div className='text-start mb-5 w-auto bg-gray-50 px-10 py-5 rounded'>
                   <p className='text-normal font-semibold'>{ amountToCurrency }.00 { from } =</p>
                   <h1 className='text-3xl font-bold'>{ totalTocurrency } { to }</h1>
                   <br />
