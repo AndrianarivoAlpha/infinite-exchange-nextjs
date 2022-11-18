@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { options, url } from '../lib/options';
 import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai';
 import { timeConverter } from '../lib/utilsFunctions';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const now = new Date();
 const endDate = `${ now.getFullYear() }-${ now.getMonth() }-${ now.getDate() }`;
 const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() }-${ now.getDate() }`;
 
-const Home = ( { data, timesSeriesData } ) =>
+const Home = ( { data } ) =>
 {
   const { symbols } = data;
 
@@ -16,8 +17,6 @@ const Home = ( { data, timesSeriesData } ) =>
   const [ to, setTo ] = useState( "EUR" );
   const [ total, setTotal ] = useState( null );
   const [ date, setDate ] = useState( "" );
-
-  console.log( timesSeriesData );
 
   const [ isLoading, setIsLoading ] = useState( false )
 
@@ -131,9 +130,10 @@ const Home = ( { data, timesSeriesData } ) =>
 
       <div className='result-container'>
         { isLoading ? (
-          <div>
-            <p>Loading...</p>
-          </div>
+          <InfinitySpin
+            width='200'
+            color="#2797e2"
+          />
         
         ) : (
           <div>
@@ -169,10 +169,10 @@ export const getServerSideProps = async () =>
   const res = await fetch( `${ url }/symbols`, options );
   const data = await res.json()
 
-  const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=EUR&to=USD`, options );
-  const timesSeriesData = await timesSeries.json();
+  // const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=EUR&to=USD`, options );
+  // const timesSeriesData = await timesSeries.json();
 
   return {
-    props: { data, timesSeriesData }
+    props: { data }
   }
 }
