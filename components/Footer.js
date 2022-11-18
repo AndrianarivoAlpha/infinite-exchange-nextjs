@@ -6,9 +6,9 @@ import Telegram from '../images/Telegram.png'
 
 const Footer = () => {
   return (
-    <footer className='footer-container'>
-      <h6>Contact developer</h6>
-      <div className="social-media">
+    <footer className='flex flex-col justify-center text-center mt-5'>
+      <h6 className='font-semibold'>Contact developer</h6>
+      <div className="flex justify-center">
         <a href="http://www.twitter.com" target="_blank" rel="noopener noreferrer">
           <Image src={Twitter} alt="" height={40} width={40}/>
         </a>

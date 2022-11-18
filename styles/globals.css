@@ -1,126 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
 
-:root {
-	--black--: #334257;
-	--dark-blue--: #2691d9;
-	--blue--: #2797e2;
-	--light--: #fafafa;
-}
 html,
 body {
 	padding: 0;
 	margin: 0;
 	font-family: "Poppins", sans-serif;
 	background-color: var(--light--);
-}
-
-* {
-	box-sizing: border-box;
-}
-.home-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	margin: 50pt auto;
-}
-.convert-text {
-	background-color: #2691d9;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	width: auto;
-}
-.layout-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	align-content: center;
-}
-.footer-container {
-	text-align: center;
-}
-.convert-p {
-	font-weight: 100;
-	font-size: 6pt;
-	color: grey;
-}
-p,
-h1,
-h2,
-a,
-h6 {
-	margin: 0;
-}
-.input-container {
-	width: 250pt;
-	height: 40px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	border: 1px solid gray;
-	display: flex;
-	align-items: center;
-	align-content: center;
-	margin: 2px auto;
-	justify-content: space-between;
-	background-color: white;
-	box-shadow: 5px 5px 10px rgb(211, 211, 211);
-}
-.input-container:hover {
-	border: 1px solid var(--blue--);
-}
-select {
-	height: 100%;
-	width: 90%;
-	border: none;
-	outline: none;
-	border: none;
-	background: none;
-}
-option {
-	background: none;
-}
-input {
-	text-align: start;
-	margin: 0;
-	padding-left: 5px;
-	height: auto;
-	border: none;
-	outline: none;
-}
-.devise-amount {
-	font-size: 12pt;
-}
-form {
-	height: auto;
-	margin: 0;
-	display: flex;
-	align-content: center;
-	align-items: center;
-}
-.convert-btn {
-	text-align: center !important;
-	width: 250pt;
-	height: 40px;
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	margin: 10px auto;
-	background-color: var(--blue--);
-	color: var(--light--);
-}
-.convert-btn:hover {
-	cursor: pointer;
-	background-color: var(--dark-blue--);
-	box-shadow: 5px 5px 10px rgb(211, 211, 211);
-}
-
-@media screen and (max-width: 820px) {
-	.layout-container {
-		width: 100%;
-	}
-	select {
-		width: 90%;
-	}
 }
