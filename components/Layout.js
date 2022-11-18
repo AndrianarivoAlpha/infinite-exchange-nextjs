@@ -5,7 +5,7 @@ import Header from './Header'
 const Layout = ({children}) => {
   return (
     <div className='flex-col items-center m-auto text-center'>
-      <Header title={"Infite Exchange"}/>
+      <Header title={"Infite X-change"}/>
       <main className='flex-col m-auto items-center justify-center'>
         {children}
       </main>

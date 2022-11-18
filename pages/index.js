@@ -12,8 +12,6 @@ const Home = ( { data } ) =>
 {
   const { symbols } = data;
 
-  console.log(symbols)
-
   const [ amount, setAmount ] = useState( 1 );
   const [ from, setFrom ] = useState( "USD" );
   const [ to, setTo ] = useState( "EUR" );
@@ -66,6 +64,7 @@ const Home = ( { data } ) =>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
           </div>
           <input
+            autoFocus
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
