@@ -14,8 +14,8 @@ const Home = ({ data }) => {
   const { symbols } = data;
 
   const [amount, setAmount] = useState(1);
-  const [from, setFrom] = useState("USD");
-  const [to, setTo] = useState("EUR");
+  const [from, setFrom] = useState("EUR");
+  const [to, setTo] = useState("USD");
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [total, setTotal] = useState(null);
   const [date, setDate] = useState("");
