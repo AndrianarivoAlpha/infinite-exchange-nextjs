@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { options, url } from '../lib/options';
 import { timeConverter } from '../lib/utilsFunctions';
 import { InfinitySpin } from 'react-loader-spinner';
+import { memo } from 'react';
 
 const now = new Date();
 const endDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 const startDate = `${now.getFullYear() - 1}-${now.getMonth() + 1}-${now.getDate() + 1}`;
 
-const Home = ({ data, timesSeriesData }) => {
-  
+const Home = ({ data }) => {
+
   //console.log(startDate);
   const { symbols } = data;
 
   const [amount, setAmount] = useState(1);
   const [from, setFrom] = useState("USD");
   const [to, setTo] = useState("EUR");
+  const [isDataFetched, setIsDataFetched] = useState(false);
   const [total, setTotal] = useState(null);
   const [date, setDate] = useState("");
 
@@ -30,6 +32,7 @@ const Home = ({ data, timesSeriesData }) => {
       if (data) {
         setDate(data?.info?.timestamp)
         setTotal(data?.result)
+        setIsDataFetched(true)
         setIsLoading(false)
       }
     } else {
@@ -41,10 +44,10 @@ const Home = ({ data, timesSeriesData }) => {
   useEffect(() => {
     getDevise()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [from, to])
+  }, [amount, from, to])
 
-  const totalTocurrency = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5 }).format(total);
-  const amountToCurrency = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5 }).format(amount);
+  const totalTocurrency = new Intl.NumberFormat().format(total);
+  const amountToCurrency = new Intl.NumberFormat().format(amount);
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -123,7 +126,8 @@ const Home = ({ data, timesSeriesData }) => {
 
 
       <div className='result-container'>
-        {isLoading ? (
+        {
+          amount === "" && isLoading ? (
           <InfinitySpin
             width='200'
             color="#2797e2"
@@ -132,7 +136,7 @@ const Home = ({ data, timesSeriesData }) => {
         ) : (
           <div>
             {
-              total && (
+              isDataFetched && amount !== "" && total && (
                 <div className='text-start mb-5 w-auto bg-gray-50 px-10 py-5 rounded'>
                   <p className='text-normal font-semibold'>{amountToCurrency}.00 {from} =</p>
                   <h1 className='text-3xl font-bold'>{totalTocurrency} {to}</h1>
@@ -156,16 +160,13 @@ const Home = ({ data, timesSeriesData }) => {
   )
 }
 
-export default Home
+export default memo (Home)
 
 export const getServerSideProps = async () => {
   const res = await fetch(`${url}/symbols`, options);
   const data = await res.json()
 
-  const timesSeries = await fetch(`${url}/timeseries?start_date=${startDate}&end_date=${endDate}&from=EUR&to=USD`, options);
-  const timesSeriesData = await timesSeries.json();
-
   return {
-    props: { data, timesSeriesData }
+    props: { data }
   }
 }
