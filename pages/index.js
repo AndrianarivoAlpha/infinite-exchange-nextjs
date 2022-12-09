@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { options, url } from '../lib/options';
-import { AiOutlineSwap, AiOutlineDoubleRight, AiOutlineCalculator } from 'react-icons/ai';
 import { timeConverter } from '../lib/utilsFunctions';
 import { InfinitySpin } from 'react-loader-spinner';
+import Graph from '../components/Graph';
 
 const now = new Date();
-const endDate = `${ now.getFullYear() }-${ now.getMonth() }-${ now.getDate() }`;
-const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() }-${ now.getDate() }`;
+const endDate = `${ now.getFullYear() }-${ now.getMonth() + 1 }-${ now.getDate() }`;
+const startDate = `${ now.getFullYear() - 1 }-${ now.getMonth() + 1 }-${ now.getDate() + 1}`;
 
-const Home = ( { data } ) =>
+const Home = ( { data, timesSeriesData } ) =>
 {
+  console.log( startDate );
   const { symbols } = data;
 
   const [ amount, setAmount ] = useState( 1 );
@@ -45,7 +46,7 @@ const Home = ( { data } ) =>
   useEffect( () =>
   {
     getDevise()
-  }, [amount, from, to] )
+  }, [from, to] )
 
   const totalTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( total );
   const amountToCurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( amount );
@@ -156,7 +157,8 @@ const Home = ( { data } ) =>
                   <p className='text-xs font-semibold text-gray-300'>Updated on : { timeConverter( date ) }</p>
                 </div>
               )
-            }
+              }
+              <Graph timesSeriesData = { timesSeriesData } to = { to } from = { from }/>
           </div>
         )
         }
@@ -173,10 +175,10 @@ export const getServerSideProps = async () =>
   const res = await fetch( `${ url }/symbols`, options );
   const data = await res.json()
 
-  // const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=EUR&to=USD`, options );
-  // const timesSeriesData = await timesSeries.json();
+  const timesSeries = await fetch( `${ url }/timeseries?start_date=${ startDate }&end_date=${ endDate }&from=EUR&to=USD`, options );
+  const timesSeriesData = await timesSeries.json();
 
   return {
-    props: { data }
+    props: { data, timesSeriesData }
   }
 }
