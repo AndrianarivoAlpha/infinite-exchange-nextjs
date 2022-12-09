@@ -46,6 +46,7 @@ const Home = ( { data, timesSeriesData } ) =>
   useEffect( () =>
   {
     getDevise()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [from, to] )
 
   const totalTocurrency = new Intl.NumberFormat( 'en-US', { maximumSignificantDigits: 5 } ).format( total );
