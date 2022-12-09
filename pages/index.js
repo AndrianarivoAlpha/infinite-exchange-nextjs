@@ -25,7 +25,7 @@ const Home = ({ data }) => {
   const getDevise = async () => {
     setIsLoading(true)
 
-    if (amount > 0) {
+    if (amount > 0 && amount ) {
       const res = await fetch(`${url}/convert?from=${from}&to=${to}&amount=${amount.toString()}`, options);
       const data = await res.json();
 
@@ -127,32 +127,32 @@ const Home = ({ data }) => {
 
       <div className='result-container'>
         {
-          amount === "" && isLoading ? (
-          <InfinitySpin
-            width='200'
-            color="#2797e2"
-          />
+          isLoading && amount === "" ? (
+            <InfinitySpin
+              width='200'
+              color="#2797e2"
+            />
 
-        ) : (
-          <div>
-            {
-              isDataFetched && amount !== "" && total && (
-                <div className='text-start mb-5 w-auto bg-gray-50 px-10 py-5 rounded'>
-                  <p className='text-normal font-semibold'>{amountToCurrency}.00 {from} =</p>
-                  <h1 className='text-3xl font-bold'>{totalTocurrency} {to}</h1>
-                  <br />
-                  <p>
-                    1 {from} = {total / amount} {to}
-                  </p>
-                  <p>
-                    1 {to} = {amount / total} {from}
-                  </p>
-                  <p className='text-xs font-semibold text-gray-300'>Updated on : {timeConverter(date)}</p>
-                </div>
-              )
-            }
-          </div>
-        )
+          ) : (
+            <div>
+              {
+                isDataFetched && amount !== "" && total && (
+                  <div className='text-start mb-5 w-auto bg-gray-50 px-10 py-5 rounded'>
+                    <p className='text-normal font-semibold'>{amountToCurrency}.00 {from} =</p>
+                    <h1 className='text-3xl font-bold'>{totalTocurrency} {to}</h1>
+                    <br />
+                    <p>
+                      1 {from} = {total / amount} {to}
+                    </p>
+                    <p>
+                      1 {to} = {amount / total} {from}
+                    </p>
+                    <p className='text-xs font-semibold text-gray-300'>Updated on : {timeConverter(date)}</p>
+                  </div>
+                )
+              }
+            </div>
+          )
         }
       </div>
     </div>
@@ -160,7 +160,7 @@ const Home = ({ data }) => {
   )
 }
 
-export default memo (Home)
+export default memo(Home)
 
 export const getServerSideProps = async () => {
   const res = await fetch(`${url}/symbols`, options);
