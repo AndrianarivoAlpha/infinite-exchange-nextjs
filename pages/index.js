@@ -127,7 +127,7 @@ const Home = ({ data }) => {
 
       <div className='result-container'>
         {
-          isLoading && amount === "" ? (
+          isLoading || amount === "" ? (
             <InfinitySpin
               width='200'
               color="#2797e2"
