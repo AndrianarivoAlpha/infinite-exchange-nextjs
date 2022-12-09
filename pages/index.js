@@ -8,7 +8,8 @@ const endDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 const startDate = `${now.getFullYear() - 1}-${now.getMonth() + 1}-${now.getDate() + 1}`;
 
 const Home = ({ data, timesSeriesData }) => {
-  console.log(startDate);
+  
+  //console.log(startDate);
   const { symbols } = data;
 
   const [amount, setAmount] = useState(1);
