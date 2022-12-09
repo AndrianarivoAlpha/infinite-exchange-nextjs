@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { options, url } from '../lib/options';
 import { timeConverter } from '../lib/utilsFunctions';
 import { InfinitySpin } from 'react-loader-spinner';
-import { memo } from 'react';
 
 const now = new Date();
 const endDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
