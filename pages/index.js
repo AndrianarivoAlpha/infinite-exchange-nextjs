@@ -1,11 +1,13 @@
 import React, { useState, useEffect, memo } from 'react'
-import { options, url } from '../lib/options';
 import { timeConverter } from '../lib/utilsFunctions';
 import { InfinitySpin } from 'react-loader-spinner';
 
 const now = new Date();
 const endDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 const startDate = `${now.getFullYear() - 1}-${now.getMonth() + 1}-${now.getDate() + 1}`;
+
+const url = "https://api.currencyapi.com/v3";
+const apiKey = process.env.NEXT_PUBLIC_API_KEY
 
 const Home = ({ data }) => {
 
@@ -21,23 +23,17 @@ const Home = ({ data }) => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const getDevise = async () => {
+  const getLatestExchangeRates = async () => {
+
     setIsLoading(true)
 
-    if (amount > 0 && amount ) {
-      const res = await fetch(`${url}/convert?from=${from}&to=${to}&amount=${amount.toString()}`, options);
-      const data = await res.json();
+    const res = await fetch(`${url}/latest?apikey=${apiKey}&base_currency=${from}&currencies=${to}`)
+    const data = await res.json()
 
-      if (data) {
-        setDate(data?.info?.timestamp)
-        setTotal(data?.result)
-        setIsDataFetched(true)
-        setIsLoading(false)
-      }
-    } else {
-      setTotal(0)
+    if (data) {
+      setTotalExchange(data)
+      setIsLoading(false)
     }
-
   }
 
   useEffect(() => {
@@ -161,11 +157,10 @@ const Home = ({ data }) => {
 
 export default memo(Home)
 
-export const getServerSideProps = async () => {
-  const res = await fetch(`${url}/symbols`, options);
-  const data = await res.json()
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`${url}/currencies?apikey=${apiKey}`)
+  const { data } = await res.json()
 
-  return {
-    props: { data }
-  }
-}
+  // Pass data to the page via props
+  return { props: { data } }
